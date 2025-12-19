@@ -17,3 +17,33 @@ Service:
 Ingress:
 - routes traffic to blue or green
 -------------------------------------------------------------------------------------
+Q. in ingress aws alb so target groups are service based ? in backend I hv payment service , wishlist service etc  ..for my e-commerce application
+--> Yes, Target Groups are indeed service-based.
+-------------------
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ecommerce-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip  # Highly recommended for EKS
+spec:
+  ingressClassName: alb
+  rules:
+  - http:
+      paths:
+      - path: /payment
+        pathType: Prefix
+        backend:
+          service:
+            name: payment-service    # Creates Target Group A
+            port:
+              number: 80
+      - path: /wishlist
+        pathType: Prefix
+        backend:
+          service:
+            name: wishlist-service   # Creates Target Group B
+            port:
+              number: 80
+------------------------------------------------------------------------------
