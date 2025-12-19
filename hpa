@@ -1,0 +1,5 @@
+Q. in prod env which is the best method to do blue & green deployment in eks ingress level or service level ? consider of hpa also 
+for blue we need to write separate yaml & for green separate yaml ?
+--> 👉 Ingress-level Blue–Green is the BEST approach for production EKS
+👉 Especially when HPA is used
+👉 Yes, Blue and Green must have separate Deployments and separate HPAs
